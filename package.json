@@ -59,7 +59,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "next": "^14",
+    "next": "^14 || ^15.0.0",
     "react": "^18"
   }
 }
