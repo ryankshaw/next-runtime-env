@@ -5,19 +5,17 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
+  "type": "module",
   "dependencies": {
-    "@types/node": "22.13.14",
-    "@types/react": "18.3.20",
-    "@types/react-dom": "18.3.5",
-    "eslint": "9.23.0",
-    "eslint-config-next": "15.2.4",
-    "next": "14.2.26",
-    "next-runtime-env": "link:../..",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "typescript": "5.8.2"
+    "@ryankshaw/next-runtime-env": "link:../..",
+    "next": "^15",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@tsconfig/next": "^2.0.3",
+    "typescript": "^5"
   }
 }

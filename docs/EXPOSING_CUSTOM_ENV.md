@@ -1,85 +1,31 @@
 # Exposing custom environment variables 🛠
 
-- [Exposing custom environment variables 🛠](#exposing-custom-environment-variables-)
-  - [Using the script approach (recommend)](#using-the-script-approach-recommend)
-    - [Example](#example)
-  - [Using the context approach](#using-the-context-approach)
-    - [Example](#example-1)
+You might only want to expose a subset of the variables prefixed with `NEXT_PUBLIC_` to the browser. In this case you can use the `whitelist` prop.
 
-## Using the script approach (recommend)
-
-You might not only want to expose environment variables that are prefixed with `NEXT_PUBLIC_`. In this case you can use the `EnvScript` to expose custom environment variables to the browser.
+#### NOTE: this technique only allows you to expose a _subset_ of things that start with `NEXT_PUBLIC_`, you can't expose things that don't start with `NEXT_PUBLIC_`. This is by design, and different than the original `next-runtime-env` package.
 
 ### Example
 
 ```tsx
 // app/layout.tsx
-// This is as of Next.js 14, but you could also use other dynamic functions
-import { unstable_noStore as noStore } from 'next/cache';
-import { EnvScript } from 'next-runtime-env';
+import { PublicEnvScript } from '@ryankshaw/next-runtime-env';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  noStore(); // Opt into dynamic rendering
+process.env = {
+  NEXT_PUBLIC_FOO: 'foo',
+  NEXT_PUBLIC_BAR: 'bar',
+}
 
-  // This value will be evaluated at runtime
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <EnvScript
-          env={{
-            NEXT_PUBLIC_: process.env.NEXT_PUBLIC_FOO,
-            BAR: process.env.BAR,
-            BAZ: process.env.BAZ,
-            notAnEnvVar: 'not-an-env-var',
-          }}
+        {}
+        <PublicEnvScript
+          // only NEXT_PUBLIC_FOO will be available to client-side code
+          whitelist={['NEXT_PUBLIC_FOO']}
         />
       </head>
-      <body>
-        {children}
-      </body>
-    </html>
-  );
-}
-```
-
-## Using the context approach
-
-You might not only want to expose environment variables that are prefixed with `NEXT_PUBLIC_`. In this case you can use the `EnvProvider` to expose custom environment variables to the context.
-
-### Example
-
-```tsx
-// app/layout.tsx
-// This is as of Next.js 14, but you could also use other dynamic functions
-import { unstable_noStore as noStore } from 'next/cache';
-import { EnvProvider } from 'next-runtime-env';
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  noStore(); // Opt into dynamic rendering
-
-  // This value will be evaluated at runtime
-  return (
-    <html lang="en">
-      <body>
-        <EnvProvider
-          env={{
-            NEXT_PUBLIC_: process.env.NEXT_PUBLIC_FOO,
-            BAR: process.env.BAR,
-            BAZ: process.env.BAZ,
-            notAnEnvVar: 'not-an-env-var',
-          }}
-        >
-          {children}
-        </EnvProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

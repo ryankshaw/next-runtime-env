@@ -2,89 +2,21 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches:
-      - development
   push:
-    # branches-ignore:
-    #   - main
-    #   - development
-
-defaults:
-  run:
-    shell: bash
-
+    branches:
+      - main
 jobs:
-  audit:
-    name: Audit
+  ci:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18, 20, 22]
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: ./.github/actions/setup-pnpm
+      - uses:
+          actions/checkout@v4
+          # will look at "packageManager" in package.json to know which pnpm version to use
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
-          npm_token: ${{ secrets.NPM_TOKEN }}
-
-      - name: Perform dependency audit
-        run: |
-          pnpm audit-ci --config .audit-ci.json
-
-  lint:
-    name: Lint
-    needs: audit
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18, 20, 22]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: ./.github/actions/setup-pnpm
-        with:
-          npm_token: ${{ secrets.NPM_TOKEN }}
-
-      - name: Execute lint
-        run: |
-          pnpm lint
-
-  coverage:
-    name: Coverage
-    needs: audit
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18, 20, 22]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: ./.github/actions/setup-pnpm
-        with:
-          npm_token: ${{ secrets.NPM_TOKEN }}
-
-      - name: Generate code coverage
-        run: |
-          pnpm test -- \
-            --ci \
-            --runInBand \
-            --coverage
-        env:
-          JEST_JUNIT_CLASSNAME: '{filepath}'
-
-      - name: Upload code coverage
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm test:coverage

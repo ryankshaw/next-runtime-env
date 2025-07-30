@@ -1,1 +1,0 @@
-Version 2.x does not support the pages router. Use [version 1.x](https://github.com/expatfile/next-runtime-env/tree/1.x) instead.
