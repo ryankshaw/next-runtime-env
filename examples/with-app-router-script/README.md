@@ -3,7 +3,7 @@
 First, run the development server:
 
 ```bash
-NEXT_PUBLIC_FOO=foo-value BAR=bar-value BAZ=baz-value npm run dev
+NEXT_PUBLIC_FOO=foo-value NEXT_PUBLIC_BAZ=baz-value BAR=bar-value npm run dev
 ```
 
 Open [http://localhost:3000/client-side](http://localhost:3000/client-side) or
@@ -13,13 +13,13 @@ browser to see the development result.
 Next, build the app without the environment variables:
 
 ```bash
-npm run build
+NEXT_PUBLIC_BAZ=baz-value-at-buildtime npm run build
 ```
 
 Finally, run the production server with the environment variables:
 
 ```bash
-NEXT_PUBLIC_FOO=foo-value BAR=bar-value BAZ=baz-value npm run start
+NEXT_PUBLIC_FOO=foo-value-at-runtime NEXT_PUBLIC_BAZ=baz-value-at-runtime BAR=bar-value-at-runtime npm run start
 ```
 
 Open [http://localhost:3000/client-side](http://localhost:3000/client-side) or

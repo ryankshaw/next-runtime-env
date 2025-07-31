@@ -6,7 +6,7 @@
 npm install @ryankshaw/next-runtime-env
 ```
 
-1. Then add the script to your head in the root layout:
+1. Then add the script to your <head> in the root layout:
 
 ```tsx
 // src/app/layout.tsx
