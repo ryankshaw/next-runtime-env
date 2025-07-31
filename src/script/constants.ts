@@ -1,1 +1,1 @@
-export const PUBLIC_ENV_KEY = '__ENV' as const;
+export const PUBLIC_ENV_KEY = '__ENV' as const

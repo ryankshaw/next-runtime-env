@@ -1,20 +1,20 @@
-import { unstable_noStore as noStore } from 'next/cache';
-import { type FC } from 'react';
-import { type ScriptProps } from 'next/script';
+import { connection } from 'next/server.js'
+import { PUBLIC_ENV_KEY } from './constants.js'
+import {
+  startsWithNextPublic,
+  type NEXT_PUBLIC_string,
+  type PublicEnv,
+} from '../helpers/next-public-utils.js'
 
-import { getPublicEnv } from '../helpers/get-public-env';
-import { type NonceConfig } from '../typings/nonce';
-import { EnvScript } from './env-script';
-
-type PublicEnvScriptProps = {
-  nonce?: string | NonceConfig;
-  disableNextScript?: boolean;
-  nextScriptProps?: ScriptProps;
-};
+// This allows TypeScript to detect our global value.
+declare global {
+  interface Window {
+    __ENV: PublicEnv
+  }
+}
 
 /**
- * Sets the public environment variables in the browser. If an nonce is
- * available, it will be set on the script tag.
+ * Sets the public environment variables in the browser. Forwards any other props (like `nonce`) on to the <script> tag.
  *
  * This component is disables Next.js' caching mechanism to ensure that the
  * environment variables are always up-to-date.
@@ -26,22 +26,28 @@ type PublicEnvScriptProps = {
  * </head>
  * ```
  */
-export const PublicEnvScript: FC<PublicEnvScriptProps> = ({
-  nonce,
-  disableNextScript,
-  nextScriptProps,
-}) => {
-  noStore(); // Opt into dynamic rendering
+export async function PublicEnvScript({
+  whitelist,
+  ...otherProps
+}: React.ComponentProps<'script'> & {
+  whitelist?: NEXT_PUBLIC_string[]
+}) {
+  await connection() // Makes sure this is dynamically rendered at runtime
 
-  // This value will be evaluated at runtime
-  const publicEnv = getPublicEnv();
+  // This will be evaluated at runtime
+  const publicEnv = Object.fromEntries(
+    Object.entries(process.env).filter(
+      ([key]) =>
+        startsWithNextPublic(key) && (!whitelist || whitelist.includes(key)),
+    ),
+  )
 
   return (
-    <EnvScript
-      env={publicEnv}
-      nonce={nonce}
-      disableNextScript={disableNextScript}
-      nextScriptProps={nextScriptProps}
+    <script
+      {...otherProps}
+      dangerouslySetInnerHTML={{
+        __html: `window['${PUBLIC_ENV_KEY}'] = ${JSON.stringify(publicEnv)}`,
+      }}
     />
-  );
-};
+  )
+}

@@ -1,8 +1,8 @@
-import { env } from 'next-runtime-env';
+import { env } from '@ryankshaw/next-runtime-env'
 
 export async function GET() {
   return Response.json({
-    bar: env('BAR'), // This is the same as process.env.BAR
+    NEXT_PUBLIC_BAR: env('NEXT_PUBLIC_BAR'), // This is the same as process.env.NEXT_PUBLIC_BAR
     baz: process.env.BAZ,
-  });
+  })
 }
