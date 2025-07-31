@@ -1,6 +1,6 @@
 {
   "name": "@ryankshaw/next-runtime-env",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Next.js Runtime Environment Configuration - Populates your environment at runtime rather than build time.",
   "main": "build/index.js",
   "type": "module",
