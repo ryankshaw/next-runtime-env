@@ -1,4 +1,4 @@
-import { env } from '@ryankshaw/next-runtime-env';
+import { env } from '@ryankshaw/next-runtime-env'
 
 export default function ServerSide() {
   return (
@@ -18,5 +18,5 @@ export default function ServerSide() {
         </li>
       </ul>
     </div>
-  );
+  )
 }

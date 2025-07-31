@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { env } from '@ryankshaw/next-runtime-env';
+import { env } from '@ryankshaw/next-runtime-env'
 
 export default function ClientSide() {
   return (
@@ -20,5 +20,5 @@ export default function ClientSide() {
         </li>
       </ul>
     </div>
-  );
+  )
 }

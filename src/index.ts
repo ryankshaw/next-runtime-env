@@ -1,3 +1,3 @@
 /* istanbul ignore file */
 
-export * from './script/index.js';
+export * from './script/index.js'

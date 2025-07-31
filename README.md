@@ -34,7 +34,7 @@ In your `app/layout.tsx`, add:
 
 ```js
 // app/layout.tsx
-import { PublicEnvScript } from '@ryankshaw/next-runtime-env';
+import { PublicEnvScript } from '@ryankshaw/next-runtime-env'
 
 export default function RootLayout({ children }) {
   return (
@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
         {children}
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -58,12 +58,12 @@ Access your environment variables easily:
 
 ```tsx
 // app/client-page.tsx
-'use client';
-import { env } from '@ryankshaw/next-runtime-env';
+'use client'
+import { env } from '@ryankshaw/next-runtime-env'
 
 export default function SomePage() {
-  const NEXT_PUBLIC_FOO = env('NEXT_PUBLIC_FOO');
-  return <main>NEXT_PUBLIC_FOO: {NEXT_PUBLIC_FOO}</main>;
+  const NEXT_PUBLIC_FOO = env('NEXT_PUBLIC_FOO')
+  return <main>NEXT_PUBLIC_FOO: {NEXT_PUBLIC_FOO}</main>
 }
 ```
 

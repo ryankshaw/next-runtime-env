@@ -1,15 +1,15 @@
-import { connection } from 'next/server.js';
-import { PUBLIC_ENV_KEY } from './constants.js';
+import { connection } from 'next/server.js'
+import { PUBLIC_ENV_KEY } from './constants.js'
 import {
   startsWithNextPublic,
   type NEXT_PUBLIC_string,
   type PublicEnv,
-} from '../helpers/next-public-utils.js';
+} from '../helpers/next-public-utils.js'
 
 // This allows TypeScript to detect our global value.
 declare global {
   interface Window {
-    __ENV: PublicEnv;
+    __ENV: PublicEnv
   }
 }
 
@@ -30,9 +30,9 @@ export async function PublicEnvScript({
   whitelist,
   ...otherProps
 }: React.ComponentProps<'script'> & {
-  whitelist?: NEXT_PUBLIC_string[];
+  whitelist?: NEXT_PUBLIC_string[]
 }) {
-  await connection(); // Makes sure this is dynamically rendered at runtime
+  await connection() // Makes sure this is dynamically rendered at runtime
 
   // This will be evaluated at runtime
   const publicEnv = Object.fromEntries(
@@ -40,7 +40,7 @@ export async function PublicEnvScript({
       ([key]) =>
         startsWithNextPublic(key) && (!whitelist || whitelist.includes(key)),
     ),
-  );
+  )
 
   return (
     <script
@@ -49,5 +49,5 @@ export async function PublicEnvScript({
         __html: `window['${PUBLIC_ENV_KEY}'] = ${JSON.stringify(publicEnv)}`,
       }}
     />
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import { PublicEnvScript } from '@ryankshaw/next-runtime-env';
-import Link from 'next/link';
+import { PublicEnvScript } from '@ryankshaw/next-runtime-env'
+import Link from 'next/link'
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -25,5 +25,5 @@ export default async function RootLayout({
         {children}
       </body>
     </html>
-  );
+  )
 }

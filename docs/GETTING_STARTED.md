@@ -10,7 +10,7 @@ npm install @ryankshaw/next-runtime-env
 
 ```tsx
 // src/app/layout.tsx
-import { PublicEnvScript } from '@ryankshaw/next-runtime-env';
+import { PublicEnvScript } from '@ryankshaw/next-runtime-env'
 
 export default function RootLayout({ children }) {
   return (
@@ -20,24 +20,24 @@ export default function RootLayout({ children }) {
       </head>
       <body>{children}</body>
     </html>
-  );
+  )
 }
 ```
 
 1. Finally, use `env` utility to access the runtime environment variables any where in your app:
 
 ```tsx
-import { env } from '@ryankshaw/next-runtime-env';
+import { env } from '@ryankshaw/next-runtime-env'
 
 export function MyComponent() {
-  const NEXT_PUBLIC_FOO = env('NEXT_PUBLIC_FOO');
-  const NEXT_PUBLIC_BAZ = env('NEXT_PUBLIC_BAZ');
+  const NEXT_PUBLIC_FOO = env('NEXT_PUBLIC_FOO')
+  const NEXT_PUBLIC_BAZ = env('NEXT_PUBLIC_BAZ')
 
   useEffect(() => {
     // some api call using NEXT_PUBLIC_BAZ
-  }, [NEXT_PUBLIC_BAZ]);
+  }, [NEXT_PUBLIC_BAZ])
 
-  return <div>{NEXT_PUBLIC_FOO}</div>;
+  return <div>{NEXT_PUBLIC_FOO}</div>
 }
 ```
 

@@ -8,7 +8,7 @@ You might only want to expose a subset of the variables prefixed with `NEXT_PUBL
 
 ```tsx
 // app/layout.tsx
-import { PublicEnvScript } from '@ryankshaw/next-runtime-env';
+import { PublicEnvScript } from '@ryankshaw/next-runtime-env'
 
 process.env = {
   NEXT_PUBLIC_FOO: 'foo',
@@ -19,7 +19,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {}
         <PublicEnvScript
           // only NEXT_PUBLIC_FOO will be available to client-side code
           whitelist={['NEXT_PUBLIC_FOO']}
@@ -27,6 +26,6 @@ export default function RootLayout({ children }) {
       </head>
       <body>{children}</body>
     </html>
-  );
+  )
 }
 ```

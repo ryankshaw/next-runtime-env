@@ -1,12 +1,12 @@
 // @ts-check
 
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import importPlugin from 'eslint-plugin-import';
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import importPlugin from 'eslint-plugin-import'
 
-import vitest from '@vitest/eslint-plugin';
+import vitest from '@vitest/eslint-plugin'
 
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -35,4 +35,4 @@ export default tseslint.config(
       'import/no-unresolved': 'off',
     },
   },
-);
+)
